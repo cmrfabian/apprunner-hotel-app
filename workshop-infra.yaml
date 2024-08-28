@@ -366,7 +366,7 @@ Resources:
   AppRunnerInstanceRole: 
     Type: AWS::IAM::Role
     Properties: 
-      RoleName: !Sub "AppRunnerHotelAppRole-${AWS::Region}"
+      RoleName: !Sub "${AWS::StackName}-AppRunnerHotelAppRole-${AWS::Region}"
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement: 
