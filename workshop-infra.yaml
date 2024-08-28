@@ -439,7 +439,7 @@ Resources:
   AppRunnerWebACL:
     Type: 'AWS::WAFv2::WebACL'
     Properties:
-      Name: AppRunnerWebACL
+      Name: !Sub "${AWS::StackName}-AppRunnerWebACL"
       Scope: REGIONAL
       Description: This is an example WebACL for App Runner
       DefaultAction:
