@@ -47,7 +47,7 @@ Resources:
       EnableDnsHostnames: true
       Tags: 
         - Key: "Name"
-          Value: "AppRunnerHotelAppVPC"
+          Value: !Sub "${AWS::StackName}-AppRunnerHotelAppVPC"
  
   PublicSubnet1:
     Type: 'AWS::EC2::Subnet'
@@ -60,7 +60,7 @@ Resources:
       MapPublicIpOnLaunch: false
       Tags: 
         - Key: "Name"
-          Value: "AppRunnerHotelApp-PublicSubnet-1"
+          Value: !Sub "${AWS::StackName}-AppRunnerHotelApp-PublicSubnet-1"
  
   PublicSubnet2:
     Type: 'AWS::EC2::Subnet'
@@ -73,7 +73,7 @@ Resources:
       MapPublicIpOnLaunch: false
       Tags: 
         - Key: "Name"
-          Value: "AppRunnerHotelApp-PublicSubnet-2"
+          Value: !Sub "${AWS::StackName}-AppRunnerHotelApp-PublicSubnet-2"
   
   PublicSubnet3:
     Type: 'AWS::EC2::Subnet'
@@ -86,7 +86,7 @@ Resources:
       MapPublicIpOnLaunch: false
       Tags: 
         - Key: "Name"
-          Value: "AppRunnerHotelApp-PublicSubnet-3"
+          Value: !Sub "${AWS::StackName}-AppRunnerHotelApp-PublicSubnet-3"
     
   PrivateSubnet1:
     Type: 'AWS::EC2::Subnet'
@@ -99,7 +99,7 @@ Resources:
       MapPublicIpOnLaunch: false
       Tags: 
         - Key: "Name"
-          Value: "AppRunnerHotelApp-PrivateSubnet-1"
+          Value: !Sub "${AWS::StackName}-AppRunnerHotelApp-PrivateSubnet-1"
  
   PrivateSubnet2:
     Type: 'AWS::EC2::Subnet'
@@ -112,7 +112,7 @@ Resources:
       MapPublicIpOnLaunch: false  
       Tags: 
         - Key: "Name"
-          Value: "AppRunnerHotelApp-PrivateSubnet-2"
+          Value: !Sub "${AWS::StackName}-AppRunnerHotelApp-PrivateSubnet-2"
 
   PrivateSubnet3:
     Type: 'AWS::EC2::Subnet'
@@ -125,7 +125,7 @@ Resources:
       MapPublicIpOnLaunch: false  
       Tags: 
         - Key: "Name"
-          Value: "AppRunnerHotelApp-PrivateSubnet-3"
+          Value: !Sub "${AWS::StackName}-AppRunnerHotelApp-PrivateSubnet-3"
 
   InternetGateway:
     Type: 'AWS::EC2::InternetGateway'
@@ -229,7 +229,7 @@ Resources:
       VpcId: !Ref AppRunnerHotelAppVPC
       Tags: 
         - Key: "Name"
-          Value: "AppRunnerHotelApp-Service-SG"
+          Value: !Sub "${AWS::StackName}-AppRunnerHotelApp-Service-SG"
   
   AppRunnerServiceSecurityGroupEgress:
     Type: AWS::EC2::SecurityGroupEgress
@@ -269,7 +269,7 @@ Resources:
       VpcId: !Ref AppRunnerHotelAppVPC
       Tags: 
         - Key: "Name"
-          Value: "AppRunnerHotelApp-RDS-SG"
+          Value: !Sub "${AWS::StackName}-AppRunnerHotelApp-RDS-SG"
   
   RDSSecurityGroupEgress:
     Type: AWS::EC2::SecurityGroupEgress
@@ -335,7 +335,7 @@ Resources:
       StorageEncrypted: true
       Tags: 
         - Key: "Name"
-          Value: "AppRunnerHotelApp-RDSDBCluster"
+          Value: !Sub "${AWS::StackName}-AppRunnerHotelApp-RDSDBCluster"
 
   AuroraDBFirstInstance:
     Type: AWS::RDS::DBInstance
@@ -350,7 +350,7 @@ Resources:
   AppRunnerECRAccessRole: 
     Type: AWS::IAM::Role
     Properties: 
-      RoleName: !Sub "AppRunnerHotelAppECRAccessRole-${AWS::Region}"
+      RoleName: !Sub "${AWS::StackName}-AppRunnerHotelAppECRAccessRole-${AWS::Region}"
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement: 
@@ -431,7 +431,7 @@ Resources:
   HotelNameParam:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: hotel_name
+      Name: !Sub "${AWS::StackName}_hotel_name"
       Type: String
       Value: !Ref HotelName
       Description: App Runner Hotel Name
@@ -471,6 +471,7 @@ Resources:
       Description: AWS Cloud9 instance for App Runner Workshop
       AutomaticStopTimeMinutes: 30
       InstanceType: t2.small
+      ImageId: amazonlinux-2023-x86_64
       Name: "AppRunnerWorkshop"
       SubnetId: !Ref PublicSubnet1
 
